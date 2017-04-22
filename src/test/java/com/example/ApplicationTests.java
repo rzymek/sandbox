@@ -34,7 +34,11 @@ public class ApplicationTests {
             repository.queryIn(Collections.emptyList());
             fail("InvalidDataAccessResourceUsageException expected");
         } catch (InvalidDataAccessResourceUsageException ex) {
-            assertThat(ExceptionUtils.getRootCauseMessage(ex), containsString("unexpected token: )"));
+            ex.printStackTrace();
+            assertThat(ExceptionUtils.getStackTrace(ex),
+                    ExceptionUtils.getRootCauseMessage(ex),
+                    containsString("unexpected token: )")
+            );
         }
     }
 
