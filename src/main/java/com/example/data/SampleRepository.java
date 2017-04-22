@@ -15,4 +15,13 @@ public interface SampleRepository extends CrudRepository<Sample, Integer>, JpaSp
 
     List<Sample> findByIdIn(List<Integer> ids);
 
+    default List<Sample> findIn(List<Integer> ids) {
+        return findAll((root, criteriaQuery, criteriaBuilder) -> {
+            if (ids.isEmpty()) {
+                return null; // or criteriaBuilder.conjunction()
+            } else {
+                return root.get("id").in(ids);
+            }
+        });
+    }
 }
